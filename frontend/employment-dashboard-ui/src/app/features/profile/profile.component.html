@@ -1,0 +1,36 @@
+<div class="page-container" *ngIf="profile()">
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>
+        My Profile
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <p><strong>Employee Code:</strong> {{ profile().employeeCode }}</p>
+
+      <p><strong>Full Name:</strong> {{ profile().fullName }}</p>
+
+      <p><strong>Email:</strong> {{ profile().email }}</p>
+
+      <p><strong>Phone:</strong> {{ profile().phoneNumber }}</p>
+
+      <p><strong>Department:</strong> {{ profile().department }}</p>
+
+      <p><strong>Role:</strong> {{ profile().role }}</p>
+
+      <p><strong>Join Date:</strong> {{ profile().joinDate | date }}</p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ profile().isActive ? 'Active' : 'Inactive' }}
+      </p>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

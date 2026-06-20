@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <title>WorkForce — Employment Management Dashboard</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+ 
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ 
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ 
+  <style>
+    /* Prevent flash of unstyled content */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f7fa; }
+ 
+    /* Loading spinner shown until Angular bootstraps */
+    .app-loading {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: #f5f7fa; z-index: 9999;
+    }
+    .app-loading-logo {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: #1a237e;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem; color: white;
+    }
+    .app-loading h2 {
+      font-size: 1.25rem; font-weight: 700;
+      color: #1a237e; margin: 0 0 0.5rem;
+    }
+    .app-loading p { color: #888; font-size: 0.875rem; margin: 0 0 1.5rem; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #e8eaf6;
+      border-top-color: #1a237e;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <!-- Shown while Angular loads -->
+  <div class="app-loading" id="app-loading">
+    <div class="app-loading-logo">⚡</div>
+    <h2>WorkForce</h2>
+    <p>Employment Management System</p>
+    <div class="spinner"></div>
+  </div>
+ 
+  <app-root></app-root>
+ 
+  <script>
+    // Hide loader once Angular bootstraps
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('app-loading');
+      if (loader) {
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.3s';
+          setTimeout(() => loader.remove(), 300);
+        }, 500);
+      }
+    });
+ 
+    // Restore saved theme on page load to prevent flash
+    const savedTheme = localStorage.getItem('emp_theme') || 'light';
+    if (savedTheme === 'dark' || (savedTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.body.style.background = '#0f0f1a';
+    }
+  </script>
+</body>
+</html>

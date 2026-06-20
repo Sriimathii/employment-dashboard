@@ -1,0 +1,109 @@
+/* ── Layout ─────────────────────────────────────── */
+    .login-bg {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #0d1b6e 0%, #1a237e 40%, #1565c0 100%);
+      padding: 1rem;
+    }
+    .login-wrapper {
+      display: flex; width: 100%; max-width: 960px;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.4);
+    }
+
+    /* ── Left panel ─────────────────────────────────── */
+    .left-panel {
+      flex: 1; background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px); padding: 3rem 2rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .brand-logo {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: white; display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1.5rem;
+    }
+    .brand-logo mat-icon { color: #1a237e; font-size: 36px; width: 36px; height: 36px; }
+    .left-panel h1 { font-size: 2rem; font-weight: 800; color: white; margin: 0 0 0.5rem; }
+    .left-panel p  { color: rgba(255,255,255,0.7); margin: 0 0 2rem; font-size: 1rem; }
+    .feature-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .feature-item { display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.85); font-size: 0.9rem; }
+    .feature-item mat-icon { color: #69f0ae; font-size: 20px; width: 20px; height: 20px; }
+
+    /* ── Right panel ─────────────────────────────────── */
+    .right-panel { flex: 1; background: white; padding: 2.5rem 2rem; display: flex; align-items: center; }
+    .login-card { width: 100%; }
+    .login-card h2 { font-size: 1.75rem; font-weight: 700; color: #1a237e; margin: 0 0 0.5rem; }
+    .login-card .sub { color: #666; font-size: 0.875rem; margin: 0 0 1.75rem; }
+
+    /* ── Error Banner ────────────────────────────────── */
+    .error-banner {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: #ffebee; border: 1px solid #ffcdd2;
+      color: #c62828; border-radius: 8px; padding: 0.75rem 1rem;
+      margin-bottom: 1.25rem; font-size: 0.875rem;
+    }
+    .error-banner mat-icon { flex-shrink: 0; }
+
+    /* ── Form ────────────────────────────────────────── */
+    .field-group { margin-bottom: 0.25rem; }
+    .field-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.25rem; }
+    .full-width { width: 100%; }
+    .prefix-icon { color: #999; font-size: 20px; margin-right: 4px; }
+    .forgot-row { text-align: right; margin: -0.5rem 0 1rem; }
+    .forgot-btn { background: none; border: none; color: #1565c0; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+    .forgot-btn:hover { text-decoration: underline; }
+    .login-btn {
+      width: 100%; height: 52px; font-size: 1rem; font-weight: 600;
+      border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .login-btn mat-icon { font-size: 20px; }
+
+    /* ── Demo Section ─────────────────────────────────── */
+    .demo-section { margin-top: 1.75rem; }
+    .demo-label {
+      text-align: center; font-size: 0.75rem; color: #999; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .demo-label::before, .demo-label::after {
+      content: ''; position: absolute; top: 50%; width: 30%; height: 1px; background: #ddd;
+    }
+    .demo-label::before { left: 0; }
+    .demo-label::after  { right: 0; }
+    .demo-cards { display: flex; gap: 0.5rem; }
+    .demo-card {
+      flex: 1; display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 0.75rem; border-radius: 8px; cursor: pointer;
+      border: 1px solid transparent; transition: all 0.2s;
+    }
+    .demo-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .demo-card mat-icon { font-size: 22px; width: 22px; height: 22px; flex-shrink: 0; }
+    .demo-card strong { display: block; font-size: 0.8rem; font-weight: 700; }
+    .demo-card small   { display: block; font-size: 0.7rem; color: #777; font-family: monospace; }
+    .admin-card    { background: #f3e5f5; border-color: #ce93d8; }
+    .admin-card    mat-icon { color: #7b1fa2; }
+    .manager-card  { background: #e0f7fa; border-color: #80deea; }
+    .manager-card  mat-icon { color: #00838f; }
+    .employee-card { background: #e8f5e9; border-color: #a5d6a7; }
+    .employee-card mat-icon { color: #2e7d32; }
+
+    /* ── Modal ───────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center; z-index: 2000;
+    }
+    .modal {
+      background: white; border-radius: 16px; padding: 1.75rem;
+      width: 90%; max-width: 440px; box-shadow: 0 24px 48px rgba(0,0,0,0.25);
+    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .modal-header h3 { font-size: 1.15rem; font-weight: 700; margin: 0; }
+    .modal p { color: #666; font-size: 0.875rem; margin: 0; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 700px) {
+      .left-panel { display: none; }
+      .login-wrapper { max-width: 440px; }
+      .demo-cards { flex-direction: column; }
+    }

@@ -1,0 +1,197 @@
+<div class="login-bg">
+  <div class="login-wrapper">
+
+    <!-- Left panel: branding -->
+    <div class="left-panel">
+      <div class="brand-logo">
+        <mat-icon>business</mat-icon>
+      </div>
+      <h1>WorkForce</h1>
+      <p>Employment Management System</p>
+      <div class="feature-list">
+        <div class="feature-item"><mat-icon>check_circle</mat-icon> Role-based access control</div>
+        <div class="feature-item"><mat-icon>check_circle</mat-icon> Real-time attendance tracking</div>
+        <div class="feature-item"><mat-icon>check_circle</mat-icon> Leave management workflow</div>
+        <div class="feature-item"><mat-icon>check_circle</mat-icon> Analytics & reports</div>
+      </div>
+    </div>
+
+    <!-- Right panel: login form -->
+    <div class="right-panel">
+      <div class="login-card">
+        <h2>Sign In</h2>
+        <p class="sub">Enter your credentials to access your dashboard</p>
+
+        <!-- Error Banner -->
+        <div class="error-banner" *ngIf="errorMsg()">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errorMsg() }}</span>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <div class="field-group">
+            <label>Username</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-icon matPrefix class="prefix-icon">person_outline</mat-icon>
+              <input matInput formControlName="username"
+                     placeholder="Enter your username"
+                     autocomplete="username">
+              <mat-error *ngIf="f['username'].hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-icon matPrefix class="prefix-icon">lock_outline</mat-icon>
+              <input matInput
+                     [type]="showPassword() ? 'text' : 'password'"
+                     formControlName="password"
+                     placeholder="Enter your password"
+                     autocomplete="current-password">
+              <button mat-icon-button matSuffix type="button"
+                      (click)="showPassword.set(!showPassword())"
+                      [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngIf="f['password'].hasError('required')">
+                Password is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="forgot-row">
+  <button
+    type="button"
+    class="forgot-btn"
+    (click)="showForgot.set(true)">
+    Forgot Password?
+  </button>
+</div>
+
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="loading() || form.invalid"
+                  class="login-btn">
+            <mat-spinner diameter="20" *ngIf="loading()"></mat-spinner>
+            <span *ngIf="!loading()">
+              <mat-icon>login</mat-icon> Sign In
+            </span>
+          </button>
+        </form>
+
+  
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  FORGOT PASSWORD MODAL                                      -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay"
+     *ngIf="showForgot()"
+     (click)="closeForgotPassword()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- ── Before sending ──────────────────────────────── -->
+    <ng-container *ngIf="!resetSent">
+
+      <div class="modal-icon-wrap" style="background:#e3f2fd">
+        <mat-icon style="color:#1565c0">lock_reset</mat-icon>
+      </div>
+      <h3 class="modal-title">Reset Password</h3>
+      <p class="modal-desc">
+        Enter your registered email address. A temporary password
+        will be generated and shown to you immediately.<br>
+        <strong>Contact your admin</strong> if you don't know your email.
+      </p>
+
+      <mat-form-field appearance="outline" class="full" style="margin-top:1rem">
+        <mat-label>Registered Email Address</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input matInput [(ngModel)]="forgotEmail"
+               type="email"
+               placeholder="yourname&#64;company.com"
+               (keyup.enter)="sendReset()">
+      </mat-form-field>
+
+      <div class="modal-actions">
+        <button mat-stroked-button (click)="closeForgotPassword()">
+          Cancel
+        </button>
+        <button mat-raised-button color="primary"
+                (click)="sendReset()"
+                [disabled]="!forgotEmail || sendingReset()">
+          <mat-icon>send</mat-icon>
+          {{ sendingReset() ? 'Processing...' : 'Reset Password' }}
+        </button>
+      </div>
+
+    </ng-container>
+
+    <!-- ── After sending ────────────────────────────────── -->
+    <ng-container *ngIf="resetSent">
+
+      <!-- Has temp password (dev mode) -->
+      <ng-container *ngIf="newTempPwd">
+        <div class="modal-icon-wrap" style="background:#e8f5e9">
+          <mat-icon style="color:#2e7d32">check_circle</mat-icon>
+        </div>
+        <h3 class="modal-title">Password Reset!</h3>
+        <p class="modal-desc">
+          Your temporary password has been generated.
+          <strong>Copy it now</strong> and log in, then change your
+          password from Settings.
+        </p>
+
+        <div class="temp-pwd-box">
+          <span class="temp-pwd-label">Temporary Password</span>
+          <div class="temp-pwd-row">
+            <span class="temp-pwd">{{ newTempPwd }}</span>
+            <button mat-icon-button (click)="copyTempPwd()" title="Copy">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="reset-steps">
+          <div class="step"><span class="step-num">1</span> Copy the temporary password above</div>
+          <div class="step"><span class="step-num">2</span> Close this dialog and sign in</div>
+          <div class="step"><span class="step-num">3</span> Go to Settings → Change Password</div>
+        </div>
+
+        <button mat-raised-button color="primary" class="full"
+                style="margin-top:1rem" (click)="closeForgotPassword()">
+          <mat-icon>login</mat-icon> Got it — Sign In Now
+        </button>
+      </ng-container>
+
+      <!-- Email sent (production mode) -->
+      <ng-container *ngIf="!newTempPwd">
+        <div class="modal-icon-wrap" style="background:#e8f5e9">
+          <mat-icon style="color:#2e7d32">mark_email_read</mat-icon>
+        </div>
+        <h3 class="modal-title">Check Your Email</h3>
+        <p class="modal-desc">
+          If <strong>{{ forgotEmail }}</strong> is registered,
+          a password reset link has been sent.<br><br>
+          Didn't receive it? Contact your HR or admin directly.
+        </p>
+
+        <div class="contact-box">
+          <mat-icon>support_agent</mat-icon>
+          <div>
+            <div style="font-weight:600;font-size:.9rem">HR Support</div>
+            <div style="font-size:.85rem;color:#666">hr&#64;company.com &nbsp;|&nbsp; +91 98765 43210</div>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" class="full"
+                style="margin-top:1rem" (click)="closeForgotPassword()">
+          Close
+        </button>
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+</div>
